@@ -51,11 +51,19 @@ public abstract class Car implements Movable{
     public double speedFactor(){return 0;}
 
     public void gas(double amount){
-        incrementSpeed(amount);
+        if (getCurrentSpeed() + amount <= enginePower) { // Kollar om ökningen överskrider motorkapaciteten.
+            if (amount >= 0 && amount <= 1) // Är det en OK ökning.
+                incrementSpeed(amount);
+        }
     }
 
-    public void brake(double amount){
-        decrementSpeed(amount);
+    public void brake(double amount) {
+        if (amount >= 0 && amount <= 1) {
+            if(getCurrentSpeed()-amount < 0) {
+                currentSpeed = 0;
+            } else
+                decrementSpeed(amount);
+        }
     }
 
     @Override

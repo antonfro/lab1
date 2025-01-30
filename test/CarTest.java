@@ -5,13 +5,12 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Volvo240Test {
-
+class CarTest {
     Car c;
 
     @BeforeEach
     void Setup() {
-        c = new Volvo240();
+        c = new Saab95();
     }
 
     @Test
@@ -31,12 +30,12 @@ class Volvo240Test {
 
     @Test
     void getNrDoors() {
-        assertEquals(4, c.getNrDoors());
+        assertEquals(2, c.getNrDoors());
     }
 
     @Test
     void getEnginePower() {
-        assertEquals(100, c.getEnginePower());
+        assertEquals(125, c.getEnginePower());
     }
 
     @Test
@@ -47,7 +46,7 @@ class Volvo240Test {
 
     @Test
     void getColor() {
-        assertEquals(Color.black, c.getColor());
+        assertEquals(Color.red, c.getColor());
     }
 
     @Test
@@ -70,7 +69,7 @@ class Volvo240Test {
     @Test
     void decrementSpeed() {
         c.startEngine();
-        c.decrementSpeed(1);
+        c.brake(1);
         assertEquals(0, c.getCurrentSpeed());
     }
 
@@ -84,7 +83,7 @@ class Volvo240Test {
     @Test
     void speedFactor() {
         c.startEngine();
-        assertEquals(100, c.getEnginePower());
+        assertEquals(1.25, c.speedFactor());
     }
 
     @Test
@@ -142,8 +141,7 @@ class Volvo240Test {
     @Test
     void testDecrementSpeed() {
         c.startEngine();
-        c.decrementSpeed(1);
-        c.decrementSpeed(1);
+        c.brake(1);
         assertEquals(0, c.getCurrentSpeed());
     }
 }
