@@ -51,12 +51,6 @@ class Volvo240Test {
     }
 
     @Test
-    void setColor() {
-        c.color = Color.blue;
-        assertEquals(Color.blue, c.getColor());
-    }
-
-    @Test
     void startEngine() {
         c.startEngine();
         assertEquals(0.1, c.getCurrentSpeed());
@@ -84,7 +78,7 @@ class Volvo240Test {
     @Test
     void speedFactor() {
         c.startEngine();
-        assertEquals(100, c.getEnginePower());
+        assertEquals(1.25, c.speedFactor());
     }
 
     @Test

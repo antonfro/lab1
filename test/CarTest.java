@@ -50,12 +50,6 @@ class CarTest {
     }
 
     @Test
-    void setColor() {
-        c.color = Color.blue;
-        assertEquals(Color.blue, c.getColor());
-    }
-
-    @Test
     void startEngine() {
         c.startEngine();
         assertEquals(0.1, c.getCurrentSpeed());
