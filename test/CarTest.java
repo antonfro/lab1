@@ -15,7 +15,11 @@ class CarTest {
 
     @Test
     void getX() {
-        assertEquals(0,c.getX());
+        c.startEngine();
+        c.turnRight();
+        c.move();
+        c.move();
+        assertEquals(0.2,c.getX());
     }
 
     @Test

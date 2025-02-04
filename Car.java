@@ -6,9 +6,9 @@ public abstract class Car implements Movable{
     private int enginePower;
     private String modelName;
     public double currentSpeed;
-    public double x = 0;
-    public double y = 0;
-    public Direction towards = Direction.NORTH;
+    private double x;
+    private double y;
+    private Direction towards = Direction.NORTH;
 
     public Car(int doors, Color colr, int engPow, String mdlName) {
         this.nrDoors = doors;
@@ -83,7 +83,7 @@ public abstract class Car implements Movable{
                 this.x -= getCurrentSpeed();
                 break;
             case NORTH:
-                this.y += getCurrentSpeed();
+                this.y += currentSpeed;
                 break;
             case EAST:
                 this.x += getCurrentSpeed();

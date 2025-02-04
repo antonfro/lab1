@@ -16,12 +16,19 @@ class Volvo240Test {
 
     @Test
     void getX() {
-        assertEquals(0,c.getX());
+        c.startEngine();
+        c.turnRight();
+        c.move();
+        c.move();
+        assertEquals(0.2,c.getX());
     }
 
     @Test
     void getY() {
-        assertEquals(0,c.getY());
+        c.startEngine();
+        c.move();
+        c.move();
+        assertEquals(0.2,c.getY());
     }
 
     @Test
@@ -42,7 +49,8 @@ class Volvo240Test {
     @Test
     void getCurrentSpeed() {
         c.startEngine();
-        assertEquals(0.1, c.getCurrentSpeed());
+        c.gas(0.5);
+        assertEquals(0.725, c.getCurrentSpeed());
     }
 
     @Test
@@ -58,21 +66,24 @@ class Volvo240Test {
 
     @Test
     void stopEngine() {
+        c.startEngine();
+        c.stopEngine();
         assertEquals(0, c.getCurrentSpeed());
     }
 
     @Test
     void decrementSpeed() {
         c.startEngine();
-        c.decrementSpeed(1);
-        assertEquals(0, c.getCurrentSpeed());
+        c.gas(0.5);
+        c.brake(0.1);
+        assertEquals(0.6, c.getCurrentSpeed());
     }
 
     @Test
     void incrementSpeed() {
         c.startEngine();
-        c.incrementSpeed(1);
-        assertEquals(1.35, c.getCurrentSpeed());
+        c.gas(0.5);
+        assertEquals(0.725, c.getCurrentSpeed());
     }
 
     @Test
@@ -128,16 +139,16 @@ class Volvo240Test {
     @Test
     void testIncrementSpeed() {
         c.startEngine();
-        c.incrementSpeed(1);
-        c.incrementSpeed(1);
+        c.gas(1);
+        c.gas(1);
         assertEquals(2.6, c.getCurrentSpeed());
     }
 
     @Test
     void testDecrementSpeed() {
         c.startEngine();
-        c.decrementSpeed(1);
-        c.decrementSpeed(1);
+        c.gas(0.5);
+        c.brake(1);
         assertEquals(0, c.getCurrentSpeed());
     }
 }
