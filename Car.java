@@ -15,6 +15,7 @@ public abstract class Car implements Movable{
         this.enginePower = engPow;
         this.color = colr;
         this.modelName = mdlName;
+        stopEngine();
     }
 
     public double getX(){return x;}
@@ -66,18 +67,19 @@ public abstract class Car implements Movable{
     }
 
     public void gas(double amount){
-        if (getCurrentSpeed() + amount <= enginePower) { // Kollar om ökningen överskrider motorkapaciteten.
-            if (amount >= 0 && amount <= 1) // Är det en OK ökning.
-                incrementSpeed(amount);
+        if (amount >= 0 && amount <= 1) // Är det en OK ökning.
+            incrementSpeed(amount);
+        else {
+            throw new IllegalArgumentException("Värdet ligger inte mellan 0-1");
         }
     }
 
     public void brake(double amount) {
         if (amount >= 0 && amount <= 1) {
-            if(getCurrentSpeed()-amount < 0) {
-                currentSpeed = 0;
-            } else
-                decrementSpeed(amount);
+            decrementSpeed(amount);
+        }
+        else {
+            throw new IllegalArgumentException("Värdet ligger inte mellan 0-1");
         }
     }
 

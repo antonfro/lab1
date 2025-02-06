@@ -92,10 +92,24 @@ class CarTest {
     }
 
     @Test
+    void illegalGas() {
+        c.startEngine();
+        assertThrows(IllegalArgumentException.class, () -> c.gas(2));
+        assertThrows(IllegalArgumentException.class, () -> c.gas(-1));
+    }
+
+    @Test
     void brake() {
         c.startEngine();
         c.brake(1);
         assertEquals(0, c.getCurrentSpeed());
+    }
+
+    @Test
+    void illegalBrake() {
+        c.startEngine();
+        assertThrows(IllegalArgumentException.class, () -> c.brake(2));
+        assertThrows(IllegalArgumentException.class, () -> c.brake(-1));
     }
 
     @Test

@@ -95,15 +95,29 @@ class Volvo240Test {
     @Test
     void gas() {
         c.startEngine();
-        c.gas(1);
-        assertEquals(1.35, c.getCurrentSpeed());
+        c.gas(0.5);
+        assertEquals(0.725, c.getCurrentSpeed());
+    }
+
+    @Test
+    void illegalGas() {
+        c.startEngine();
+        assertThrows(IllegalArgumentException.class, () -> c.gas(2));
+        assertThrows(IllegalArgumentException.class, () -> c.gas(-1));
     }
 
     @Test
     void brake() {
         c.startEngine();
-        c.brake(1);
+        c.brake(0.5);
         assertEquals(0, c.getCurrentSpeed());
+    }
+
+    @Test
+    void illegalBrake() {
+        c.startEngine();
+        assertThrows(IllegalArgumentException.class, () -> c.brake(2));
+        assertThrows(IllegalArgumentException.class, () -> c.brake(-1));
     }
 
     @Test
