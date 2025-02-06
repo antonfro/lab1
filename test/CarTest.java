@@ -74,14 +74,14 @@ class CarTest {
     @Test
     void incrementSpeed() {
         c.startEngine();
-        c.incrementSpeed(1);
+        c.gas(1);
         assertEquals(1.35, c.getCurrentSpeed());
     }
 
     @Test
     void speedFactor() {
         c.startEngine();
-        assertEquals(1.25, c.speedFactor());
+        assertEquals(1.25, c.getSpeedFactor());
     }
 
     @Test
@@ -125,14 +125,14 @@ class CarTest {
 
     @Test
     void testSpeedFactor() {
-        assertEquals(1.25, c.speedFactor());
+        assertEquals(1.25, c.getSpeedFactor());
     }
 
     @Test
     void testIncrementSpeed() {
         c.startEngine();
-        c.incrementSpeed(1);
-        c.incrementSpeed(1);
+        c.gas(1);
+        c.gas(1);
         assertEquals(2.6, c.getCurrentSpeed());
     }
 

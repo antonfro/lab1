@@ -25,6 +25,8 @@ public abstract class Car implements Movable{
 
     public Direction getTowards(){return towards;}
 
+    public double getSpeedFactor(){return speedFactor();}
+
     public int getNrDoors(){
         return nrDoors;
     }
@@ -51,14 +53,15 @@ public abstract class Car implements Movable{
 
     public void stopEngine(){ currentSpeed = 0;}
 
-    public void decrementSpeed(double amount) {
-        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
-    }
-    public void incrementSpeed(double amount) {
-        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, getEnginePower());
+    private void decrementSpeed(double amount) {
+        currentSpeed = Math.max(getCurrentSpeed() - getSpeedFactor() * amount, 0);
     }
 
-    public double speedFactor(){
+    private void incrementSpeed(double amount) {
+        currentSpeed = Math.min(getCurrentSpeed() + getSpeedFactor() * amount, getEnginePower());
+    }
+
+    protected double speedFactor(){
         return getEnginePower() * 0.01;
     }
 

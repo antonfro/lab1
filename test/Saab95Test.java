@@ -88,7 +88,7 @@ class Saab95Test {
     @Test
     void speedFactor() {
         c.startEngine();
-        assertEquals(1.25, c.speedFactor());
+        assertEquals(1.25, c.getSpeedFactor());
     }
 
     @Test
@@ -132,7 +132,7 @@ class Saab95Test {
 
     @Test
     void testSpeedFactor() {
-        assertEquals(1.25, c.speedFactor());
+        assertEquals(1.25, c.getSpeedFactor());
     }
 
     @Test
