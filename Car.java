@@ -5,7 +5,7 @@ public abstract class Car implements Movable{
     private Color color;
     private int enginePower;
     private String modelName;
-    public double currentSpeed;
+    protected double currentSpeed;
     private double x;
     private double y;
     private Direction towards = Direction.NORTH;
@@ -51,11 +51,16 @@ public abstract class Car implements Movable{
 
     public void stopEngine(){ currentSpeed = 0;}
 
-    public void decrementSpeed(double amount){}
+    public void decrementSpeed(double amount) {
+        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
+    }
+    public void incrementSpeed(double amount) {
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, getEnginePower());
+    }
 
-    public void incrementSpeed(double amount){}
-
-    public double speedFactor(){return 0;}
+    public double speedFactor(){
+        return getEnginePower() * 0.01;
+    }
 
     public void gas(double amount){
         if (getCurrentSpeed() + amount <= enginePower) { // Kollar om ökningen överskrider motorkapaciteten.
@@ -83,7 +88,7 @@ public abstract class Car implements Movable{
                 this.x -= getCurrentSpeed();
                 break;
             case NORTH:
-                this.y += currentSpeed;
+                this.y += getCurrentSpeed();
                 break;
             case EAST:
                 this.x += getCurrentSpeed();
@@ -126,7 +131,4 @@ public abstract class Car implements Movable{
                 break;
         }
     }
-
-
-
 }
