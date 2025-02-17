@@ -22,7 +22,11 @@ class CartransportTest {
     }
 
     @Test
-    void getX() {
+    void getHaveCar() {
+        Volvo240 b = new Volvo240();
+        s.rampButton();
+        s.loadCar(b);
+        assertTrue(s.getHaveCar());
     }
 
     @Test
@@ -38,7 +42,10 @@ class CartransportTest {
     }
 
     @Test
-    void getNrDoors() {
+    void isTailOK() {
+        assertTrue(s.isTailOK());
+        s.rampButton();
+        assertFalse(s.isTailOK());
     }
 
     @Test
@@ -46,6 +53,12 @@ class CartransportTest {
         Volvo240 b = new Volvo240();
         Saab95 b2 = new Saab95();
         Volvo240 b3 = new Volvo240();
+        s.rampButton();
+        b.startEngine();
+        b.move();
+        b.move();
+        b.move();
+        b.move();
         s.loadCar(b);
         assertEquals(b, s.loadedCars.getFirst());
         s.loadCar(b2);
@@ -60,6 +73,7 @@ class CartransportTest {
         Volvo240 b = new Volvo240();
         Saab95 b2 = new Saab95();
         Volvo240 b3 = new Volvo240();
+        s.rampButton();
         s.loadCar(b);
         s.loadCar(b2);
         s.loadCar(b3);
@@ -121,4 +135,5 @@ class CartransportTest {
         s.rampButton();
         assertEquals(Cartransport.rampPos.DOWN, s.getRampPos());
     }
+
 }

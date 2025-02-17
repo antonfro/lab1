@@ -4,7 +4,7 @@ public class Scania extends Truck{
     private int trailerAngle;
 
     public Scania() {
-        super(2, Color.red, 250, "Scania");
+        super(2, Color.red, 250, "Scania", 100);
         trailerAngle = 0;
     }
 
@@ -18,7 +18,6 @@ public class Scania extends Truck{
 
     public int getTrailerAngle() {return trailerAngle;}
 
-
     public void incrementTrailer(int amount) {
         if (getCurrentSpeed() == 0 && amount >= 0) {
             if (getTrailerAngle() + amount > 70) {
@@ -29,7 +28,6 @@ public class Scania extends Truck{
             }
         }
     }
-
 
     public void decrementTrailer(int amount) {
         if (getCurrentSpeed() == 0 && amount >= 0) {
