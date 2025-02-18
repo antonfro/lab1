@@ -8,7 +8,6 @@ public abstract class Car extends Vehicle{
     }
 
 
-
 /*    public boolean isOnTransport(Cartransport transport) {
         return transport.loadedCars.contains(this);
     }*/
