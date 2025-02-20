@@ -132,6 +132,12 @@ class CartransportTest {
         s.move();
         assertEquals(0.4, b.getY());
         assertThrows(IllegalArgumentException.class, b::move);
+        s.stopEngine();
+        s.rampButton();
+        s.unloadCar();
+        b.startEngine();
+        b.move();
+        assertEquals(0.5, b.getY());
     }
 
     @Test
