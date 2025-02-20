@@ -9,14 +9,11 @@ public class Cartransport extends Truck{
     private final double carProximity = 0.5;
 
     public Cartransport() {
-        super(2, Color.magenta, 300, "Blictne", 120);
+        super(2, Color.magenta, 300, "Cartransport", 120);
     }
 
 
-
-
-
-    public boolean getHaveCar() {return !loadedCars.isEmpty();}
+    public boolean hasCar() {return !loadedCars.isEmpty();}
 
     public void unloadCar() {
         if (getRampPos() == rampPos.UP) {
@@ -77,41 +74,33 @@ public class Cartransport extends Truck{
     }
 
     @Override
+    public void turnRight() {
+        super.turnRight();
+        if (hasCar()) {
+            for (Car b : loadedCars) {
+                b.towards = getTowards();
+
+            }
+        }
+    }
+
+    @Override
+    public void turnLeft() {
+        super.turnLeft();
+        if (hasCar()) {
+             for (Car b : loadedCars) {
+                 b.towards = getTowards();
+            }
+        }
+    }
+
+    @Override
     public void move() {
-        if (isTailOK()) {
-            switch (getTowards()) {
-                case SOUTH:
-                    y -= getCurrentSpeed();
-                    if (getHaveCar()) {
-                        for (Car b : loadedCars) {
-                            b.y -= getCurrentSpeed();
-                        }
-                    }
-                    break;
-                case WEST:
-                    x -= getCurrentSpeed();
-                    if (getHaveCar()) {
-                        for (Car b : loadedCars) {
-                            b.x -= getCurrentSpeed();
-                        }
-                    }
-                    break;
-                case NORTH:
-                    y += getCurrentSpeed();
-                    if (getHaveCar()) {
-                        for (Car b : loadedCars) {
-                            y += getCurrentSpeed();
-                        }
-                    }
-                    break;
-                case EAST:
-                    x += getCurrentSpeed();
-                    if (getHaveCar()) {
-                        for (Car b : loadedCars) {
-                            b.x += getCurrentSpeed();
-                        }
-                    }
-                    break;
+        super.move();
+        if (hasCar()) {
+             for (Car b : loadedCars) {
+                 b.y = y;
+                 b.x = x;
             }
         }
     }

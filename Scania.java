@@ -9,8 +9,6 @@ public class Scania extends Truck{
     }
 
 
-
-
     @Override
     public boolean isTailOK() {
         return getTrailerAngle() == 0;

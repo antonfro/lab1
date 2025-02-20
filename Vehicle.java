@@ -4,7 +4,7 @@ public class Vehicle implements Movable{
     private int nrDoors;
     private Color color;
     private int enginePower;
-    private String modelName;
+    protected String modelName;
     protected double currentSpeed;
     protected double x;
     protected double y;
@@ -69,7 +69,7 @@ public class Vehicle implements Movable{
     protected double speedFactor(){
         return getEnginePower() * 0.01;
     }
-    //Kanske ha krav att tail är ok ?
+
     public void gas(double amount){
         if (amount >= 0 && amount <= 1)
             incrementSpeed(amount);
@@ -88,7 +88,22 @@ public class Vehicle implements Movable{
     }
 
     @Override
-    public void move() {};
+    public void move() {
+        switch (getTowards()) {
+            case SOUTH:
+                y -= getCurrentSpeed();
+                break;
+            case WEST:
+                x -= getCurrentSpeed();
+                break;
+            case NORTH:
+                y += getCurrentSpeed();
+                break;
+            case EAST:
+                x += getCurrentSpeed();
+                break;
+        }
+    }
 
     @Override
     public void turnLeft(){

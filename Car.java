@@ -1,39 +1,43 @@
 import java.awt.*;
 
 public abstract class Car extends Vehicle{
-    protected Cartransport transport;
+    protected Cartransport transport; // Vilken transport bilen är på.
+    protected CarShop shop;
 
     public Car(int doors, Color colr, int engPow, String mdlName, double size) {
         super(doors, colr, engPow, mdlName, size);
     }
 
 
+    public boolean isInCarShop() {
+        return shop != null;
+    }
 
-/*    public boolean isOnTransport(Cartransport transport) {
-        return transport.loadedCars.contains(this);
-    }*/
+    public boolean isOnTransport() {
+        return transport != null;
+    }
 
-// Måste veta om bil är på en transport ?
+    @Override
+    public void turnRight() {
+        if (!isOnTransport() && !isInCarShop()) {
+            super.turnRight();
+        }
+    }
+
+    @Override
+    public void turnLeft() {
+        if (!isOnTransport() && !isInCarShop()) {
+            super.turnLeft();
+        }
+    }
+
     @Override
     public void move() {
-        if (transport == null) {
-            switch (getTowards()) {
-                case SOUTH:
-                    y -= getCurrentSpeed();
-                    break;
-                case WEST:
-                    x -= getCurrentSpeed();
-                    break;
-                case NORTH:
-                    y += getCurrentSpeed();
-                    break;
-                case EAST:
-                    x += getCurrentSpeed();
-                    break;
-            }
+        if (!isOnTransport() && !isInCarShop()) {
+            super.move();
         }
         else {
-            throw new IllegalArgumentException("Bil är på en transport.");
+            throw new IllegalArgumentException("Bilen är på släp eller i verkstad.");
         }
     }
 
