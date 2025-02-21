@@ -14,6 +14,17 @@ class CarTest {
     }
 
     @Test
+    void hasTransport() {
+        Cartransport s = new Cartransport();
+        assertFalse(c.isOnTransport());
+        s.rampButton();
+        s.loadCar(c);
+        assertTrue(c.isOnTransport());
+        s.unloadCar();
+        assertFalse(c.isOnTransport());
+    }
+
+    @Test
     void getX() {
         c.startEngine();
         c.turnRight();

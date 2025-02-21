@@ -22,7 +22,11 @@ class CartransportTest {
     }
 
     @Test
-    void getX() {
+    void hasCar() {
+        Volvo240 b = new Volvo240();
+        s.rampButton();
+        s.loadCar(b);
+        assertTrue(s.hasCar());
     }
 
     @Test
@@ -38,7 +42,10 @@ class CartransportTest {
     }
 
     @Test
-    void getNrDoors() {
+    void isTailOK() {
+        assertTrue(s.isTailOK());
+        s.rampButton();
+        assertFalse(s.isTailOK());
     }
 
     @Test
@@ -46,6 +53,12 @@ class CartransportTest {
         Volvo240 b = new Volvo240();
         Saab95 b2 = new Saab95();
         Volvo240 b3 = new Volvo240();
+        s.rampButton();
+        b.startEngine();
+        b.move();
+        b.move();
+        b.move();
+        b.move();
         s.loadCar(b);
         assertEquals(b, s.loadedCars.getFirst());
         s.loadCar(b2);
@@ -60,6 +73,7 @@ class CartransportTest {
         Volvo240 b = new Volvo240();
         Saab95 b2 = new Saab95();
         Volvo240 b3 = new Volvo240();
+        s.rampButton();
         s.loadCar(b);
         s.loadCar(b2);
         s.loadCar(b3);
@@ -68,11 +82,31 @@ class CartransportTest {
     }
 
     @Test
-    void getColor() {
+    void turnLeftWithCar() {
+        Volvo240 b = new Volvo240();
+        s.rampButton();
+        s.loadCar(b);
+        s.rampButton();
+        assertTrue(s.hasCar());
+        s.turnLeft();
+        assertEquals(Vehicle.Direction.WEST, s.getTowards());
+        assertEquals(Vehicle.Direction.WEST, b.getTowards());
+        b.turnLeft();
+        assertEquals(Vehicle.Direction.WEST, b.getTowards());
     }
 
     @Test
-    void setColor() {
+    void turnRightWithCar() {
+        Volvo240 b = new Volvo240();
+        s.rampButton();
+        s.loadCar(b);
+        s.rampButton();
+        assertTrue(s.hasCar());
+        s.turnRight();
+        assertEquals(Vehicle.Direction.EAST, s.getTowards());
+        assertEquals(Vehicle.Direction.EAST, b.getTowards());
+        b.turnLeft();
+        assertEquals(Vehicle.Direction.EAST, b.getTowards());
     }
 
     @Test
@@ -84,7 +118,26 @@ class CartransportTest {
     }
 
     @Test
-    void speedFactor() {
+    void moveWithCars() {
+        Volvo240 b = new Volvo240();
+        s.rampButton();
+        s.loadCar(b);
+        s.rampButton();
+        assertTrue(s.hasCar());
+        s.startEngine();
+        assertEquals(0.0, b.getY());
+        s.move();
+        s.move();
+        s.move();
+        s.move();
+        assertEquals(0.4, b.getY());
+        assertThrows(IllegalArgumentException.class, b::move);
+        s.stopEngine();
+        s.rampButton();
+        s.unloadCar();
+        b.startEngine();
+        b.move();
+        assertEquals(0.5, b.getY());
     }
 
     @Test
@@ -121,4 +174,5 @@ class CartransportTest {
         s.rampButton();
         assertEquals(Cartransport.rampPos.DOWN, s.getRampPos());
     }
+
 }

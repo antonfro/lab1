@@ -4,20 +4,23 @@ public class Vehicle implements Movable{
     private int nrDoors;
     private Color color;
     private int enginePower;
-    private String modelName;
+    protected String modelName;
     protected double currentSpeed;
     protected double x;
     protected double y;
-    private Direction towards = Direction.NORTH;
-    /*protected double[][] position;*/
+    protected Direction towards = Direction.NORTH;
+    private double size;
 
-    public Vehicle(int doors, Color colr, int engPow, String mdlName) {
+    public Vehicle(int doors, Color colr, int engPow, String mdlName, double size) {
         this.nrDoors = doors;
         this.enginePower = engPow;
         this.color = colr;
         this.modelName = mdlName;
+        this.size = size;
         stopEngine();
     }
+
+    public double getSize() {return size;}
 
     public double getX(){return x;}
 
@@ -66,7 +69,7 @@ public class Vehicle implements Movable{
     protected double speedFactor(){
         return getEnginePower() * 0.01;
     }
-    //Kanske ha krav att tail är ok ?
+
     public void gas(double amount){
         if (amount >= 0 && amount <= 1)
             incrementSpeed(amount);
@@ -85,22 +88,37 @@ public class Vehicle implements Movable{
     }
 
     @Override
-    public void move() {};
+    public void move() {
+        switch (getTowards()) {
+            case SOUTH:
+                y -= getCurrentSpeed();
+                break;
+            case WEST:
+                x -= getCurrentSpeed();
+                break;
+            case NORTH:
+                y += getCurrentSpeed();
+                break;
+            case EAST:
+                x += getCurrentSpeed();
+                break;
+        }
+    }
 
     @Override
    public void turnLeft(){  // Car? eller vehicle?
         switch (getTowards()) {
             case SOUTH:
-                towards = Car.Direction.EAST;
+                towards = Direction.EAST;
                 break;
             case WEST:
-                towards = Car.Direction.SOUTH;
+                towards = Direction.SOUTH;
                 break;
             case NORTH:
-                towards = Car.Direction.WEST;
+                towards = Direction.WEST;
                 break;
             case EAST:
-                towards = Car.Direction.NORTH;
+                towards = Direction.NORTH;
                 break;
         }
     }
@@ -109,16 +127,16 @@ public class Vehicle implements Movable{
     public void turnRight(){
         switch (getTowards()) {
             case SOUTH:
-                towards = Car.Direction.WEST;
+                towards = Direction.WEST;
                 break;
             case WEST:
-                towards = Car.Direction.NORTH;
+                towards = Direction.NORTH;
                 break;
             case NORTH:
-                towards = Car.Direction.EAST;
+                towards = Direction.EAST;
                 break;
             case EAST:
-                towards = Car.Direction.SOUTH;
+                towards = Direction.SOUTH;
                 break;
         }
     }

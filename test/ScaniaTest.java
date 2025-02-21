@@ -83,11 +83,17 @@ class ScaniaTest {
     }
 
     @Test
-    void turnLeft() {
+    void isTailOK() {
+        assertTrue(s.isTailOK());
+        s.incrementTrailer(20);
+        assertFalse(s.isTailOK());
     }
 
     @Test
-    void turnRight() {
+    void getTrailerAngle() {
+        s.incrementTrailer(20);
+        s.incrementTrailer(30);
+        assertEquals(50, s.getTrailerAngle());
     }
 
     @Test
