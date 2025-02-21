@@ -88,7 +88,7 @@ public class Vehicle implements Movable{
     public void move() {};
 
     @Override
-    public void turnLeft(){
+   public void turnLeft(){  // Car? eller vehicle?
         switch (getTowards()) {
             case SOUTH:
                 towards = Car.Direction.EAST;

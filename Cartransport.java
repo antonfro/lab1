@@ -16,7 +16,7 @@ public class Cartransport extends Truck{
 
     public void unloadCar() {
         if (getRampPos() == rampPos.UP) {
-
+            throw new IllegalArgumentException("Flaket är uppe.");
         }
         if (loadedCars.empty()) {
             throw new IllegalArgumentException("Flaket är tomt.");
@@ -27,7 +27,7 @@ public class Cartransport extends Truck{
     }
 
     public void loadCar(Car c) {
-        if (loadedCars.size() <= cargoSize) {
+        if (loadedCars.size() < cargoSize){
             loadedCars.add(c);
         }
         else {
