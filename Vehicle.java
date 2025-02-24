@@ -8,7 +8,7 @@ public class Vehicle implements Movable{
     protected double currentSpeed;
     protected double x;
     protected double y;
-    protected Direction towards = Direction.NORTH;
+    public Direction towards = Direction.NORTH;
     private double size;
 
     public Vehicle(int doors, Color colr, int engPow, String mdlName, double size) {
