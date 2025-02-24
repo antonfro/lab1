@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -20,7 +22,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    // ArrayList<ACar> cars = new ArrayList<>();
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
 
     //methods:
 
@@ -37,28 +39,77 @@ public class CarController {
         cc.timer.start();
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
- /*           for (ACar car : cars) {
-                car.move();
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
-                frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-            }*/
+    public void start(JButton startButton) {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.startEngine();
+        }
+    }
+
+    public void stop(JButton stopButton) {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.stopEngine();
+        }
+    }
+
+    public void turboOff(JButton turboOffButton) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.modelName == "Saab95"){
+
+            }
+        }
+    }
+
+
+    public void turboOn() {
+    }
+
+    public void liftBed(JButton liftBedButton) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.modelName.equals("Scania") || Objects.equals(vehicle.modelName, "Cartransport")){
+
+            }
+        }
+    }
+
+    public void lowerBed(JButton lowerBedButton) {
+        for (Vehicle vehicle : vehicles) {
+
+        }
+    }
+
+    public void brake(JButton brakeButton) {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.brake(1);
         }
     }
 
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-       /* for (ACar car : cars
-                ) {
-            vi.gas(gas);
+        for (Vehicle vehicle : vehicles) {
+            vehicle.gas(gas);
         }
     }
+
+
+    /* Each step the TimerListener moves all the cars in the list and tells the
+    * view to update its images. Change this method to your needs.
+    * */
+    private class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            for (Vehicle vehicle : vehicles) {
+                vehicle.move();
+                int x = (int) Math.round(vehicle.getX());
+                int y = (int) Math.round(vehicle.getY());
+                frame.drawPanel.moveit(x, y);
+                // repaint() calls the paintComponent method of the panel
+                frame.drawPanel.repaint();
+            }
+        }
+    }
+
+
+
+
+
 }
