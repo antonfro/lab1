@@ -39,45 +39,54 @@ public class CarController {
         // Start the timer
         cc.timer.start();
     }
+    // starts  all vehicles engines
 
     public void start() {
         for (Vehicle vehicle : vehicles) {
             vehicle.startEngine();
         }
     }
-
+    // stops all vehicles engines
     public void stop() {
         for (Vehicle vehicle : vehicles) {
             vehicle.stopEngine();
         }
     }
-
+    // truns off turbo if The vehicle is a Saab
     public void turboOff() {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.modelName == "Saab95"){
-
+            if (vehicle instanceof Saab95  ){ // ev typecast saab95 as new varible
+              ((Saab95) vehicle).setTurboOff();
             }
         }
     }
-
-
+    // truns on turbo if The vehicle is a Saab
     public void turboOn() {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Saab95  ){ // ev typecast saab95 as new varible
+                ((Saab95) vehicle).setTurboOn();
+            }
+        }
     }
-
+    // lifts the bed for all truck types
     public void liftBed() {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.modelName.equals("Scania") || Objects.equals(vehicle.modelName, "Cartransport")){
-
+            if (vehicle instanceof Scania ){
+                vehicle.incrementTrailer(2);
             }
         }
     }
-
+    // lowers the bed for all truck types
     public void lowerBed() {
         for (Vehicle vehicle : vehicles) {
-
+            if (vehicle instanceof Scania ) {
+                vehicle.decrementTrailer(2);
+            } else if (vehicle instanceof Cartransport ) {
+                ((Cartransport) vehicle).rampButton();
+            }
         }
     }
-
+    // Break for each car
      void brake() {
         for (Vehicle vehicle : vehicles) {
             vehicle.brake(0.5);
@@ -103,7 +112,7 @@ public class CarController {
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
                 frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
+//                 repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
         }
