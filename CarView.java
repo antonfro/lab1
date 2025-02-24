@@ -101,7 +101,7 @@ public class CarView extends JFrame{
 
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
-        gasButton.addActionListener(new ActionListener() {
+        gasButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.gas(gasAmount);
@@ -111,28 +111,28 @@ public class CarView extends JFrame{
         brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.brake(brakeButton);
+                carC.brake();
             }
         });
 
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.start(startButton);
+                carC.start();
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.stop(stopButton);
+                carC.stop();
             }
         });
 
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.turboOff(turboOffButton);
+                carC.turboOff();
 
             }
         });
@@ -147,14 +147,14 @@ public class CarView extends JFrame{
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.liftBed(liftBedButton);
+                carC.liftBed();
             }
         });
 
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.lowerBed(lowerBedButton);
+                carC.lowerBed();
             }
         });
 

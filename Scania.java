@@ -16,6 +16,7 @@ public class Scania extends Truck{
 
     public int getTrailerAngle() {return trailerAngle;}
 
+
     public void incrementTrailer(int amount) {
         if (getCurrentSpeed() == 0 && amount >= 0) {
             if (getTrailerAngle() + amount > 70) {

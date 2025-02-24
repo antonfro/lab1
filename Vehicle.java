@@ -56,7 +56,12 @@ public class Vehicle implements Movable{
         currentSpeed = 0.1;
     }
 
-    public void stopEngine(){ currentSpeed = 0;}
+    public void incrementTrailer(int amount) {}
+
+    public void decrementTrailer(int amount) {}
+
+
+        public void stopEngine(){ currentSpeed = 0;}
 
     private void decrementSpeed(double amount) {
         currentSpeed = Math.max(getCurrentSpeed() - getSpeedFactor() * amount, 0);

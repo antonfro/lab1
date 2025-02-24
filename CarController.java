@@ -30,7 +30,8 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        // cc.cars.add(new Volvo240());
+        cc.vehicles.add(new Volvo240());
+        cc.vehicles.add(new Scania());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -39,19 +40,19 @@ public class CarController {
         cc.timer.start();
     }
 
-    public void start(JButton startButton) {
+    public void start() {
         for (Vehicle vehicle : vehicles) {
             vehicle.startEngine();
         }
     }
 
-    public void stop(JButton stopButton) {
+    public void stop() {
         for (Vehicle vehicle : vehicles) {
             vehicle.stopEngine();
         }
     }
 
-    public void turboOff(JButton turboOffButton) {
+    public void turboOff() {
         for (Vehicle vehicle : vehicles) {
             if (vehicle.modelName == "Saab95"){
 
@@ -63,7 +64,7 @@ public class CarController {
     public void turboOn() {
     }
 
-    public void liftBed(JButton liftBedButton) {
+    public void liftBed() {
         for (Vehicle vehicle : vehicles) {
             if (vehicle.modelName.equals("Scania") || Objects.equals(vehicle.modelName, "Cartransport")){
 
@@ -71,15 +72,15 @@ public class CarController {
         }
     }
 
-    public void lowerBed(JButton lowerBedButton) {
+    public void lowerBed() {
         for (Vehicle vehicle : vehicles) {
 
         }
     }
 
-    public void brake(JButton brakeButton) {
+     void brake() {
         for (Vehicle vehicle : vehicles) {
-            vehicle.brake(1);
+            vehicle.brake(0.5);
         }
     }
 
