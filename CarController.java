@@ -54,26 +54,34 @@ public class CarController {
 
     public void turboOff() {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.modelName == "Saab95"){
-
+            if (vehicle instanceof Saab95){
+                ((Saab95) vehicle).setTurboOff();
             }
         }
     }
 
-
     public void turboOn() {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Saab95) {
+                ((Saab95) vehicle).setTurboOn();
+            }
+        }
     }
 
     public void liftBed() {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.modelName.equals("Scania") || Objects.equals(vehicle.modelName, "Cartransport")){
-
+            if (vehicle instanceof Scania scania){
+                scania.incrementTrailer(10);
             }
+
         }
     }
 
     public void lowerBed() {
         for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Scania scania) {
+                scania.decrementTrailer(10);
+            }
 
         }
     }
@@ -92,6 +100,17 @@ public class CarController {
         }
     }
 
+    public void turnLeft() {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.turnLeft();
+        }
+    }
+
+    public void turnRight() {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.turnRight();
+        }
+    }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
@@ -99,11 +118,15 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle vehicle : vehicles) {
-                vehicle.move();
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
+                if (x > 500 || y > 500 || x < 0 || y < 0) {
+                    vehicle.turnLeft();
+                    vehicle.turnLeft();
+                }
+                vehicle.move();
                 frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
+                    // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
         }
