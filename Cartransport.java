@@ -58,7 +58,7 @@ public class Cartransport extends Truck{
     public enum rampPos{UP, DOWN}
 
     public void rampButton(){
-        if (getCurrentSpeed() == 0) {
+        if (getCurrentSpeed() <= 0.001) {
             switch (getRampPos()) {
                 case UP:
                     ramp = rampPos.DOWN;

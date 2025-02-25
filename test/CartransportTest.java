@@ -142,6 +142,13 @@ class CartransportTest {
 
     @Test
     void gas() {
+        s.rampButton();
+        assertThrows(IllegalArgumentException.class, s::startEngine);
+        s.rampButton();
+        s.startEngine();
+        assertEquals(0.1, s.getCurrentSpeed());
+        s.move();
+        assertEquals(0.1, s.getY());
     }
 
     @Test

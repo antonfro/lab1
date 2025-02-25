@@ -6,6 +6,15 @@ public abstract class Truck extends Vehicle {
         super(doors, colr, engPow, mdlName, size);
     }
 
+    @Override
+    public void startEngine() {
+        if (isTailOK()) {
+            currentSpeed = 0.1;
+        }
+        else {
+            throw new IllegalArgumentException("Rampen är uppe.");
+        }
+    }
 
     public boolean isTailOK() {return true;}; // Kollar om det är ok att köra.
 
@@ -50,21 +59,12 @@ public abstract class Truck extends Vehicle {
     }
 
     @Override
-    public void move() { // Annan move än vad bilar behöver.
+    public void gas(double amount) {
         if (isTailOK()) {
-            switch (getTowards()) {
-                case SOUTH:
-                    y -= getCurrentSpeed();
-                    break;
-                case WEST:
-                    x -= getCurrentSpeed();
-                    break;
-                case NORTH:
-                    y += getCurrentSpeed();
-                    break;
-                case EAST:
-                    x += getCurrentSpeed();
-                    break;
+            if (amount >= 0 && amount <= 1)
+                incrementSpeed(amount);
+            else {
+                throw new IllegalArgumentException("Värdet ligger inte mellan 0-1");
             }
         }
     }
