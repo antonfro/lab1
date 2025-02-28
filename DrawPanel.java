@@ -8,7 +8,7 @@ import javax.swing.*;
 
 // This panel represents the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel{
+public class DrawPanel extends JPanel {
 
     final Map<String, BufferedImage> images = new HashMap<>();
     final Map<String, Point> carPositions = new HashMap<>();
@@ -26,13 +26,12 @@ public class DrawPanel extends JPanel{
         Point carPosition = carPositions.get(carName);
         if (carPosition != null){
             carPosition.setLocation(x, y);
-
         }
     }
+
     private void loadCarImage(String carName, String filepath, Point startingPosition) throws IOException {
         BufferedImage image = ImageIO.read(DrawPanel.class.getResourceAsStream(filepath));
         images.put(carName, image);
-
         carPositions.put(carName, new Point(startingPosition.x, startingPosition.y));
     }
 
@@ -61,8 +60,6 @@ public class DrawPanel extends JPanel{
 
     }
 
-
-
     // This method is called each time the panel updates/refreshes/repaints itself
     // TODO: Change to suit your needs.
     @Override
@@ -76,7 +73,7 @@ public class DrawPanel extends JPanel{
                 System.out.println("Moving " + carName + " to (" + position.x + ", " + position.y + ")");
                 g.drawImage(image, position.x, position.y, null);
             } else {
-                System.out.println("NoPositionFOundfor" + carName);// see javadoc for more info on the parameters
+                System.out.println("NoPositionFoundFor" + carName);// see javadoc for more info on the parameters
             }
             g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
         }
