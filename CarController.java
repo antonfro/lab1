@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Objects;
-
 /*
 * This class represents the Controller part in the MVC pattern.
 * Its responsibilities are to listen to the View and responds in a appropriate manner by
@@ -24,6 +22,7 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> vehicles = new ArrayList<>();
+    CarShop<Volvo240> volvoShop = new CarShop<>(5);
 
     //methods:
 
@@ -44,10 +43,20 @@ public class CarController {
         cc.timer.start();
     }
 
+    private boolean collision(Vehicle v) {
+        if (v instanceof Volvo240) {
+            if (v.getX() > 300 && v.getX() < 400 && v.getY() > 300 && v.getY() < 400) {
+                volvoShop.insertCar((Volvo240) v);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     private void setInitialPosition() {
         for (Vehicle v : vehicles) {
             Point startPos = frame.drawPanel.carPositions.get(v.modelName);
-
             if (startPos != null) {
                 v.setPosition(startPos.x, startPos.y);
             }
@@ -131,17 +140,24 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            ArrayList<Vehicle> removes = new ArrayList<>();
             for (Vehicle vehicle : vehicles) {
                 vehicle.move();
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
                 frame.drawPanel.moveit(vehicle.modelName, x, y);
                 frame.drawPanel.repaint();
+                if (collision(vehicle)) {
+                    removes.add(vehicle);
+                }
                     if (x > 700 || y > 500 || x < 0 || y < 0) {
                         vehicle.turnLeft();
                         vehicle.turnLeft();
                 }
                   // repaint() calls the paintComponent method of the panel
+            }
+            for (Vehicle v : removes) {
+                vehicles.remove(v);
             }
         }
     }

@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
  **/
 
 public class CarView extends JFrame{
-    private static final int X = 800;
-    private static final int Y = 800;
+    private static final int X = 700;
+    private static final int Y = 700;
 
     // The controller member
     CarController carC;
@@ -136,7 +136,6 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.turboOff();
-
             }
         });
 
@@ -174,7 +173,6 @@ public class CarView extends JFrame{
                 carC.turnRight();
             }
         });
-
 
 
         // Make the frame pack all it's components by respecting the sizes if possible.
