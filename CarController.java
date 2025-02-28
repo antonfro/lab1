@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,13 +32,26 @@ public class CarController {
         CarController cc = new CarController();
 
         cc.vehicles.add(new Volvo240());
+        cc.vehicles.add(new Saab95());
         cc.vehicles.add(new Scania());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
+        cc.setInitialPosition();
+
         // Start the timer
         cc.timer.start();
+    }
+
+    private void setInitialPosition() {
+        for (Vehicle v : vehicles) {
+            Point startPos = frame.drawPanel.carPositions.get(v.modelName);
+
+            if (startPos != null) {
+                v.setPosition(startPos.x, startPos.y);
+            }
+        }
     }
 
     public void start() {
@@ -118,22 +132,17 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle vehicle : vehicles) {
+                vehicle.move();
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
-                if (x > 500 || y > 500 || x < 0 || y < 0) {
-                    vehicle.turnLeft();
-                    vehicle.turnLeft();
-                }
-                vehicle.move();
-                frame.drawPanel.moveit(x, y);
-                    // repaint() calls the paintComponent method of the panel
+                frame.drawPanel.moveit(vehicle.modelName, x, y);
                 frame.drawPanel.repaint();
+                    if (x > 700 || y > 500 || x < 0 || y < 0) {
+                        vehicle.turnLeft();
+                        vehicle.turnLeft();
+                }
+                  // repaint() calls the paintComponent method of the panel
             }
         }
     }
-
-
-
-
-
 }
