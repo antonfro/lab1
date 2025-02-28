@@ -20,6 +20,12 @@ public class Vehicle implements Movable{
         stopEngine();
     }
 
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+
     public double getSize() {return size;}
 
     public double getX(){return x;}
