@@ -5,7 +5,6 @@ public class CarShop<T extends Car> {
     private ArrayList<T> cars = new ArrayList<>(capacity);
 
     public CarShop(int capac) {
-        //this.cars = cars;
         this.capacity = capac;
     }
 
