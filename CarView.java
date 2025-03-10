@@ -13,15 +13,9 @@ import java.awt.event.ActionListener;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-<<<<<<< Updated upstream
-public class CarView extends CarController{
-    private static final int X = 700;
-    private static final int Y = 700;
-=======
 public class CarView extends JFrame{
     private static final int X = 800;
     private static final int Y = 800;
->>>>>>> Stashed changes
 
     // The controller member
     CarController carC;
