@@ -24,23 +24,33 @@ public class CarController extends JFrame{
     ArrayList<Vehicle> vehicles = new ArrayList<>();
     CarShop<Volvo240> volvoShop = new CarShop<>(5);
 
+
     //methods:
 
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
+        cc.frame = new CarView("CarSim 1.0", cc);
 
-        cc.vehicles.add(new Volvo240());
-        cc.vehicles.add(new Saab95());
-        cc.vehicles.add(new Scania());
+        cc.addVehicle(new Volvo240(), 0, 0);
+        cc.addVehicle(new Saab95(), 0, 100);
+        cc.addVehicle(new Scania(), 0, 200);
+        cc.addVehicle(new Volvo240(), 200, 200);
+        cc.addVehicle(new Scania(), 300, 300);
 
         // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
 
         cc.setInitialPosition();
 
         // Start the timer
         cc.timer.start();
+    }
+
+    public void addVehicle (Vehicle vehicle, int startX, int startY) {
+        String uniqueName = vehicle.getClass().getSimpleName() +  "_" + vehicles.size();
+        vehicles.add(vehicle);
+        frame.drawPanel.addCarImage(uniqueName, vehicle.getClass().getSimpleName(), startX, startY);
+
     }
 
     private boolean collision(Vehicle v) {
@@ -55,10 +65,12 @@ public class CarController extends JFrame{
 
 
     private void setInitialPosition() {
-        for (Vehicle v : vehicles) {
-            Point startPos = frame.drawPanel.carPositions.get(v.modelName);
+        for (int i = 0; i < vehicles.size(); i++) {
+            Vehicle vehicle = vehicles.get(i);
+            String uniqueName = vehicle.getClass().getSimpleName() + "_" + i;
+            Point startPos = frame.drawPanel.carPositions.get(uniqueName);
             if (startPos != null) {
-                v.setPosition(startPos.x, startPos.y);
+                vehicle.setPosition(startPos.x, startPos.y);
             }
         }
     }
@@ -141,11 +153,14 @@ public class CarController extends JFrame{
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             ArrayList<Vehicle> removes = new ArrayList<>();
-            for (Vehicle vehicle : vehicles) {
+            for (int i = 0; i < vehicles.size(); i++) {
+                Vehicle vehicle = vehicles.get(i);
                 vehicle.move();
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
-                frame.drawPanel.moveit(vehicle.modelName, x, y);
+                String uniqueName = vehicle.getClass().getSimpleName() + "_" + i;
+                System.out.println("Moving " + vehicle + " to " + x + "-" + y);
+                frame.drawPanel.moveit(uniqueName, x, y);
                 frame.drawPanel.repaint();
                 if (collision(vehicle)) {
                     removes.add(vehicle);

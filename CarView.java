@@ -13,9 +13,15 @@ import java.awt.event.ActionListener;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
+<<<<<<< Updated upstream
 public class CarView extends CarController{
     private static final int X = 700;
     private static final int Y = 700;
+=======
+public class CarView extends JFrame{
+    private static final int X = 800;
+    private static final int Y = 800;
+>>>>>>> Stashed changes
 
     // The controller member
     CarController carC;
@@ -37,6 +43,7 @@ public class CarView extends CarController{
     JButton lowerBedButton = new JButton("Lower Lift Bed");
     JButton turnLeftButton = new JButton("Turn Left");
     JButton turnRightButton = new JButton("Turn Right");
+    JButton addCarButton = new JButton("Add Random Car");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -86,6 +93,7 @@ public class CarView extends CarController{
         controlPanel.add(lowerBedButton, 5);
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);
+        controlPanel.add(addCarButton, 8);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -173,6 +181,16 @@ public class CarView extends CarController{
                 carC.turnRight();
             }
         });
+
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Vehicle volvo = new Volvo240();
+                carC.addVehicle(volvo, 0,0);
+            }
+        });
+
+
 
 
         // Make the frame pack all it's components by respecting the sizes if possible.
