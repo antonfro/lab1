@@ -1,6 +1,13 @@
 import java.awt.*;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Vehicle implements Movable{
+
+    private static final AtomicInteger counter = new AtomicInteger(0);
+
+    private final int regId = counter.incrementAndGet();
+
     private int nrDoors;
     private Color color;
     private int enginePower;
@@ -18,6 +25,10 @@ public class Vehicle implements Movable{
         this.modelName = mdlName;
         this.size = size;
         stopEngine();
+    }
+
+    public int getRegId() {
+        return regId;
     }
 
     public void setPosition(double x, double y) {
@@ -116,7 +127,7 @@ public class Vehicle implements Movable{
     }
 
     @Override
-   public void turnLeft(){  // Car? eller vehicle?
+   public void turnLeft(){
         switch (getTowards()) {
             case SOUTH:
                 towards = Direction.EAST;
@@ -149,5 +160,18 @@ public class Vehicle implements Movable{
                 towards = Direction.SOUTH;
                 break;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return regId == vehicle.regId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(regId);
     }
 }

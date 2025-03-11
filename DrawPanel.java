@@ -3,6 +3,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -10,14 +11,14 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel {
 
-    final Map<String, BufferedImage> images = new HashMap<>();
-    final Map<String, Point> carPositions = new HashMap<>();
+    final Map<Integer, BufferedImage> images = new HashMap<>();
+    final Map<Integer, Point> carPositions = new ConcurrentHashMap<>();
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
-    void moveit(String uniqueName, int x, int y) {
-        Point carPosition = carPositions.get(uniqueName);
+    void moveit(Integer regId, int x, int y) {
+        Point carPosition = carPositions.get(regId);
         if (carPosition != null){
             carPosition.setLocation(x, y);
         }
@@ -36,11 +37,11 @@ public class DrawPanel extends JPanel {
         }
     }
 
-    public void addCarImage(String uniqueName, String carType, int x, int y) {
+    public void addCarImage(int id, String carType, int x, int y) {
         try {
             BufferedImage image = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + carType + ".jpg"));
-            images.put(uniqueName, image);
-            carPositions.put(uniqueName, new Point(x, y));
+            images.put(id, image);
+            carPositions.put(id, new Point(x, y));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,14 +52,14 @@ public class DrawPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Map.Entry<String, BufferedImage> entry : images.entrySet()) {
-            String carName = entry.getKey();
+        for (Map.Entry<Integer, BufferedImage> entry : images.entrySet()) {
+            Integer regId = entry.getKey();
             BufferedImage image = entry.getValue();
-            Point position = carPositions.get(carName);
+            Point position = carPositions.get(regId);
             if (position != null) {
                 g.drawImage(image, position.x, position.y, null);
             } else {
-                System.out.println("NoPositionFoundFor" + carName);// see javadoc for more info on the parameters
+                System.out.println("NoPositionFoundFor" + regId);// see javadoc for more info on the parameters
             }
             g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
         }

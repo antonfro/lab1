@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Model implements ActionListener {
     CarView cv;
@@ -15,9 +16,8 @@ public class Model implements ActionListener {
     }
 
     void addVehicle (Vehicle vehicle, int startX, int startY) {
-        String uniqueName = vehicle.getClass().getSimpleName() +  "_" + vehicles.size();
         vehicles.add(vehicle);
-        cv.drawPanel.addCarImage(uniqueName, vehicle.getClass().getSimpleName(), startX, startY);
+        cv.drawPanel.addCarImage(vehicle.getRegId(), vehicle.getClass().getSimpleName(), startX, startY);
     }
 
     public void removeVehicle () {
@@ -25,10 +25,8 @@ public class Model implements ActionListener {
 
             Vehicle lastVehicle = vehicles.removeLast();
 
-            String uniqueName = lastVehicle.getClass().getSimpleName() + "_" + vehicles.size();
-
-            cv.drawPanel.images.remove(uniqueName);
-            cv.drawPanel.carPositions.remove(uniqueName);
+            cv.drawPanel.images.remove(lastVehicle.getRegId());
+            cv.drawPanel.carPositions.remove(lastVehicle.getRegId());
 
             cv.drawPanel.repaint();
         }
@@ -44,11 +42,31 @@ public class Model implements ActionListener {
         return false;
     }
 
+    boolean wallCollision(Vehicle v) {
+        double x = v.getX();
+        double y = v.getY();
+
+        if (x >= 700){
+            v.x = 699;
+            return true;
+        }else if (y >= 500) {
+            v.y = 499;
+            return true;
+        }else if (x <= 0 ){
+            v.x = 1;
+            return true;
+
+        }else if (y <= 0){
+            v.y = 1;
+            return true;
+
+        }
+    return false;
+    }
+
     void setInitialPosition() {
-        for (int i = 0; i < vehicles.size(); i++) {
-            Vehicle vehicle = vehicles.get(i);
-            String uniqueName = vehicle.getClass().getSimpleName() + "_" + i;
-            Point startPos = cv.drawPanel.carPositions.get(uniqueName);
+        for (Vehicle vehicle : vehicles) {
+            Point startPos = cv.drawPanel.carPositions.get(vehicle.getRegId());
             if (startPos != null) {
                 vehicle.setPosition(startPos.x, startPos.y);
             }
@@ -127,28 +145,30 @@ public class Model implements ActionListener {
         }
     }
 
-    public void actionPerformed(ActionEvent e) {
-        ArrayList<Vehicle> removes = new ArrayList<>();
-        for (int i = 0; i < vehicles.size(); i++) {
-            Vehicle vehicle = vehicles.get(i);
+    /** This is called from Timer every 50 millis. Timer initially set in Application **/
+    public synchronized void actionPerformed(ActionEvent e) {
+        Iterator<Vehicle> iterator = vehicles.iterator();
+        while (iterator.hasNext()) {
+
+            Vehicle vehicle = iterator.next();
+
             vehicle.move();
+
             int x = (int) Math.round(vehicle.getX());
             int y = (int) Math.round(vehicle.getY());
-            String uniqueName = vehicle.getClass().getSimpleName() + "_" + i;
-            cv.drawPanel.moveit(uniqueName, x, y);
-            cv.drawPanel.repaint();
-            if (collision(vehicle)) {
-                removes.add(vehicle);
-            }
-            if (x > 700 || y > 500 || x < 0 || y < 0) {
-                vehicle.turnLeft();
-                vehicle.turnLeft();
-            }
-            // repaint() calls the paintComponent method of the panel
-        }
-        for (Vehicle v : removes) {
-            vehicles.remove(v);
 
+            if (collision(vehicle)) {
+                iterator.remove();
+            } else if (wallCollision(vehicle)) {
+                vehicle.stopEngine();
+                vehicle.turnLeft();
+                vehicle.turnLeft();
+                vehicle.startEngine();
+            }
+
+            cv.drawPanel.moveit(vehicle.getRegId(), x, y);
         }
+
+        cv.drawPanel.repaint();
     }
 }

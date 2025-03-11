@@ -3,7 +3,7 @@ import javax.swing.*;
 public class Application {
 
     public static void main(String[] args) {
-        int delay = 50;
+        int delay = 100;
         // The timer is started with a listener (see below) that executes the statements
         // each step between delays
         CarView view = new CarView("CarSim 1.0");
