@@ -23,8 +23,6 @@ public class DrawPanel extends JPanel {
         }
     }
 
-
-
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
@@ -47,8 +45,6 @@ public class DrawPanel extends JPanel {
             e.printStackTrace();
         }
     }
-
-
 
 
     // This method is called each time the panel updates/refreshes/repaints itself

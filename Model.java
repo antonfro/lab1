@@ -14,8 +14,6 @@ public class Model implements ActionListener {
         this.cv = cv;
     }
 
-
-
     void addVehicle (Vehicle vehicle, int startX, int startY) {
         String uniqueName = vehicle.getClass().getSimpleName() +  "_" + vehicles.size();
         vehicles.add(vehicle);
@@ -23,10 +21,18 @@ public class Model implements ActionListener {
     }
 
     public void removeVehicle () {
-        vehicles.removeLast();
+        if (!vehicles.isEmpty()) {
+
+            Vehicle lastVehicle = vehicles.removeLast();
+
+            String uniqueName = lastVehicle.getClass().getSimpleName() + "_" + vehicles.size();
+
+            cv.drawPanel.images.remove(uniqueName);
+            cv.drawPanel.carPositions.remove(uniqueName);
+
+            cv.drawPanel.repaint();
+        }
     }
-
-
 
     boolean collision(Vehicle v) {
         if (v instanceof Volvo240) {
@@ -129,7 +135,6 @@ public class Model implements ActionListener {
             int x = (int) Math.round(vehicle.getX());
             int y = (int) Math.round(vehicle.getY());
             String uniqueName = vehicle.getClass().getSimpleName() + "_" + i;
-            System.out.println(uniqueName + x + y);
             cv.drawPanel.moveit(uniqueName, x, y);
             cv.drawPanel.repaint();
             if (collision(vehicle)) {
@@ -143,6 +148,7 @@ public class Model implements ActionListener {
         }
         for (Vehicle v : removes) {
             vehicles.remove(v);
+
         }
     }
 }

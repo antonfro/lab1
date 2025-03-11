@@ -14,6 +14,7 @@ public class Application {
         model.addVehicle(new Volvo240(), 0, 0);
         model.addVehicle(new Saab95(), 100, 200);
         model.addVehicle(new Scania(), 0, 400);
+        model.addVehicle(new Saab95(), 400, 400);
 
         model.setInitialPosition();
 

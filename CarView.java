@@ -12,8 +12,8 @@ import java.awt.*;
  **/
 
 public class CarView extends JFrame{
-    private static final int X = 700;
-    private static final int Y = 700;
+    private static final int X = 800;
+    private static final int Y = 800;
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
@@ -45,8 +45,6 @@ public class CarView extends JFrame{
 
     int getGasAmount() {return gasAmount;}
 
-    // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
     private void initComponents(String title) {
 
         this.setTitle(title);
