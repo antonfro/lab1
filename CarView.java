@@ -37,7 +37,8 @@ public class CarView extends JFrame{
     JButton lowerBedButton = new JButton("Lower Lift Bed");
     JButton turnLeftButton = new JButton("Turn Left");
     JButton turnRightButton = new JButton("Turn Right");
-    JButton addCarButton = new JButton("Add Random Car");
+    JButton addCarButton = new JButton("Add Volvo Car");
+    JButton RemoveCarButton = new JButton("Remove Volvo Car");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -88,6 +89,7 @@ public class CarView extends JFrame{
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);
         controlPanel.add(addCarButton, 8);
+        controlPanel.add(RemoveCarButton, 9);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -105,7 +107,6 @@ public class CarView extends JFrame{
         this.add(stopButton);
 
         // This actionListener is for the gas button only
-        // TODO: Create more for each component as necessary
         gasButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -183,6 +184,13 @@ public class CarView extends JFrame{
                 carC.addVehicle(volvo, 0,0);
             }
         });
+
+//        RemoveCarButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                carC.removeVehicle(Volvo240);
+//            }
+//        });
 
 
 

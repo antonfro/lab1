@@ -50,7 +50,11 @@ public class CarController extends JFrame{
         String uniqueName = vehicle.getClass().getSimpleName() +  "_" + vehicles.size();
         vehicles.add(vehicle);
         frame.drawPanel.addCarImage(uniqueName, vehicle.getClass().getSimpleName(), startX, startY);
+    }
 
+    public void removeVehicle (Vehicle Volvo240) {
+        if (vehicles.getLast() == Volvo240)
+            vehicles.removeLast();
     }
 
     private boolean collision(Vehicle v) {
@@ -147,6 +151,8 @@ public class CarController extends JFrame{
         }
     }
 
+
+
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
@@ -159,7 +165,6 @@ public class CarController extends JFrame{
                 int x = (int) Math.round(vehicle.getX());
                 int y = (int) Math.round(vehicle.getY());
                 String uniqueName = vehicle.getClass().getSimpleName() + "_" + i;
-                System.out.println("Moving " + vehicle + " to " + x + "-" + y);
                 frame.drawPanel.moveit(uniqueName, x, y);
                 frame.drawPanel.repaint();
                 if (collision(vehicle)) {
