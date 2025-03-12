@@ -11,7 +11,7 @@ import java.awt.*;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements modelListener{
     private static final int X = 800;
     private static final int Y = 800;
 
@@ -37,6 +37,25 @@ public class CarView extends JFrame{
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+
+    @Override
+    public void update(Integer regID, int x , int y ) {
+        drawPanel.moveit(regID,  x, y);
+        drawPanel.repaint();
+    }
+
+    @Override
+    public void addedCar(Integer regID, String model, int x, int y) {
+        drawPanel.addCarImage(regID, model, x, y);
+    }
+
+    @Override
+    public void removedCar(Integer regID) {
+            drawPanel.images.remove(regID);
+            drawPanel.carPositions.remove(regID);
+            drawPanel.repaint();
+    }
+
 
     // Constructor
     public CarView(String framename){

@@ -4,13 +4,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Vehicle implements Movable{
 
+    // increments everytime a new instance of vehicle is created, and makes a individual regID.
     private static final AtomicInteger counter = new AtomicInteger(0);
-
     private final int regId = counter.incrementAndGet();
 
     private int nrDoors;
     private Color color;
     private int enginePower;
+
+
     protected String modelName;
     protected double currentSpeed;
     protected double x;
@@ -36,6 +38,7 @@ public class Vehicle implements Movable{
         this.y = y;
     }
 
+    public String getModelName() {return modelName;}
 
     public double getSize() {return size;}
 

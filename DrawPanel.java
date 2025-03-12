@@ -12,7 +12,7 @@ import javax.swing.*;
 public class DrawPanel extends JPanel {
 
     final Map<Integer, BufferedImage> images = new HashMap<>();
-    final Map<Integer, Point> carPositions = new ConcurrentHashMap<>();
+    final Map<Integer, Point> carPositions = new ConcurrentHashMap<>();   // only one use at a time
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
@@ -28,7 +28,7 @@ public class DrawPanel extends JPanel {
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
-        this.setBackground(Color.magenta);
+        this.setBackground(Color.LIGHT_GRAY);
         try {
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
         } catch (IOException ex)
@@ -49,6 +49,7 @@ public class DrawPanel extends JPanel {
 
 
     // This method is called each time the panel updates/refreshes/repaints itself
+    // changed for regID
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -5,30 +5,47 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Model implements ActionListener {
-    CarView cv;
-
+    ArrayList<modelListener> Listeners = new ArrayList<>();
     // The delay (ms) corresponds to 20 updates a sec (hz)
     ArrayList<Vehicle> vehicles = new ArrayList<>();
     CarShop<Volvo240> volvoShop = new CarShop<>(5);
 
-    public Model(CarView cv) {
-        this.cv = cv;
+    public Model(){}
+
+    void addListener (modelListener L){
+        Listeners.add(L);
+    }
+
+    void notifyListener(Integer regID, int x , int y ){
+        for (modelListener l : Listeners ){
+            l.update( regID,  x ,  y );
+        }
+    }
+
+    void notifyCarAdded (Integer regID, String model, int x, int y){
+        for (modelListener l : Listeners){
+            l.addedCar(regID, model, x, y);
+        }
+    }
+
+    void notifyCarRemoved( Integer regID) {
+        for (modelListener l : Listeners) {
+            l.removedCar(regID);
+        }
     }
 
     void addVehicle (Vehicle vehicle, int startX, int startY) {
         vehicles.add(vehicle);
-        cv.drawPanel.addCarImage(vehicle.getRegId(), vehicle.getClass().getSimpleName(), startX, startY);
+        notifyCarAdded(vehicle.getRegId(), vehicle.getModelName(),startX, startY);
+
     }
 
     public void removeVehicle () {
         if (!vehicles.isEmpty()) {
 
             Vehicle lastVehicle = vehicles.removeLast();
-
-            cv.drawPanel.images.remove(lastVehicle.getRegId());
-            cv.drawPanel.carPositions.remove(lastVehicle.getRegId());
-
-            cv.drawPanel.repaint();
+            Integer removedID = lastVehicle.getRegId();
+            notifyCarRemoved(removedID);
         }
     }
 
@@ -46,32 +63,32 @@ public class Model implements ActionListener {
         double x = v.getX();
         double y = v.getY();
 
-        if (x >= 700){
-            v.x = 699;
+        if (x > 700){
+            v.x = 700;
             return true;
-        }else if (y >= 500) {
-            v.y = 499;
+        }else if (y > 500) {
+            v.y = 500;
             return true;
-        }else if (x <= 0 ){
-            v.x = 1;
+        }else if (x < 0 ){
+            v.x = 0;
             return true;
 
-        }else if (y <= 0){
-            v.y = 1;
+        }else if (y < 0){
+            v.y = 0;
             return true;
 
         }
     return false;
     }
 
-    void setInitialPosition() {
-        for (Vehicle vehicle : vehicles) {
-            Point startPos = cv.drawPanel.carPositions.get(vehicle.getRegId());
-            if (startPos != null) {
-                vehicle.setPosition(startPos.x, startPos.y);
-            }
-        }
-    }
+//    void setInitialPosition() {
+//        for (Vehicle vehicle : vehicles) {
+//            Point startPos = cv.drawPanel.carPositions.get(vehicle.getRegId());
+//            if (startPos != null) {
+//                vehicle.setPosition(startPos.x, startPos.y);
+//            }
+//        }
+//    }
 
     void start() {
         for (Vehicle vehicle : vehicles) {
@@ -165,10 +182,7 @@ public class Model implements ActionListener {
                 vehicle.turnLeft();
                 vehicle.startEngine();
             }
-
-            cv.drawPanel.moveit(vehicle.getRegId(), x, y);
+            notifyListener(vehicle.getRegId(), x, y );
         }
-
-        cv.drawPanel.repaint();
     }
 }

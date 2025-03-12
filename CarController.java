@@ -9,17 +9,16 @@ import java.awt.event.ActionListener;
 public class CarController {
     // member fields:
     Model model;
-
     // The frame that represents this instance View of the MVC pattern
     CarView cv;
 
     public CarController(Model model, CarView cv) {
         this.cv = cv;
         this.model = model;
-        addListeners();
+        buttonListeners();
     }
 
-    private void addListeners() {
+    private void buttonListeners() {
         cv.gasButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
