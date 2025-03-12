@@ -19,7 +19,7 @@ public class Application {
         model.addVehicle(new Saab95(), 400, 400);
 
 //        model.setInitialPosition();
-
+//
         // Start the timer
         timer.start();
     }
