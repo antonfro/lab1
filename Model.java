@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Model implements ActionListener {
     CarView cv;
@@ -9,6 +11,7 @@ public class Model implements ActionListener {
     // The delay (ms) corresponds to 20 updates a sec (hz)
     ArrayList<Vehicle> vehicles = new ArrayList<>();
     CarShop<Volvo240> volvoShop = new CarShop<>(5);
+    private final Map<Vehicle, String> vehicleNames = new HashMap<>();
 
     public Model(CarView cv) {
         this.cv = cv;
@@ -17,6 +20,7 @@ public class Model implements ActionListener {
     void addVehicle (Vehicle vehicle, int startX, int startY) {
         String uniqueName = vehicle.getClass().getSimpleName() +  "_" + vehicles.size();
         vehicles.add(vehicle);
+        vehicleNames.put(vehicle,uniqueName);
         cv.drawPanel.addCarImage(uniqueName, vehicle.getClass().getSimpleName(), startX, startY);
     }
 
@@ -129,16 +133,17 @@ public class Model implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         ArrayList<Vehicle> removes = new ArrayList<>();
-        for (int i = 0; i < vehicles.size(); i++) {
-            Vehicle vehicle = vehicles.get(i);
+        for (Vehicle vehicle : vehicles) {
             vehicle.move();
             int x = (int) Math.round(vehicle.getX());
             int y = (int) Math.round(vehicle.getY());
-            String uniqueName = vehicle.getClass().getSimpleName() + "_" + i;
+            String uniqueName = vehicleNames.get(vehicle);
             cv.drawPanel.moveit(uniqueName, x, y);
-            cv.drawPanel.repaint();
+
             if (collision(vehicle)) {
                 removes.add(vehicle);
+                cv.drawPanel.images.remove(uniqueName);
+                cv.drawPanel.carPositions.remove(uniqueName);
             }
             if (x > 700 || y > 500 || x < 0 || y < 0) {
                 vehicle.turnLeft();
@@ -149,6 +154,6 @@ public class Model implements ActionListener {
         for (Vehicle v : removes) {
             vehicles.remove(v);
 
-        }
+        } cv.drawPanel.repaint();
     }
 }

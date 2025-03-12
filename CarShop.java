@@ -35,7 +35,7 @@ public class CarShop<T extends Car> {
         else if (cars.contains(b)) {
             throw new IllegalArgumentException("Bilen är redan i verkstaden.");
         }
-        else if (cars.size() < capacity) { // ?
+        else { // ?
             b.shop = this;
             cars.add(b);
         }
