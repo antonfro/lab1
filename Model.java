@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -42,14 +41,13 @@ public class Model implements ActionListener {
 
     public void removeVehicle () {
         if (!vehicles.isEmpty()) {
-
             Vehicle lastVehicle = vehicles.removeLast();
             Integer removedID = lastVehicle.getRegId();
             notifyCarRemoved(removedID);
         }
     }
 
-    boolean collision(Vehicle v) {
+    boolean inBoundsWorkShop(Vehicle v) {
         if (v instanceof Volvo240) {
             if (v.getX() > 300 && v.getX() < 400 && v.getY() > 300 && v.getY() < 400) {
                 volvoShop.insertCar((Volvo240) v);
@@ -80,15 +78,6 @@ public class Model implements ActionListener {
         }
     return false;
     }
-
-//    void setInitialPosition() {
-//        for (Vehicle vehicle : vehicles) {
-//            Point startPos = cv.drawPanel.carPositions.get(vehicle.getRegId());
-//            if (startPos != null) {
-//                vehicle.setPosition(startPos.x, startPos.y);
-//            }
-//        }
-//    }
 
     void start() {
         for (Vehicle vehicle : vehicles) {
@@ -142,7 +131,6 @@ public class Model implements ActionListener {
         }
     }
 
-    // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Vehicle vehicle : vehicles) {
@@ -174,7 +162,7 @@ public class Model implements ActionListener {
             int x = (int) Math.round(vehicle.getX());
             int y = (int) Math.round(vehicle.getY());
 
-            if (collision(vehicle)) {
+            if (inBoundsWorkShop(vehicle)) {
                 iterator.remove();
             } else if (wallCollision(vehicle)) {
                 vehicle.stopEngine();
