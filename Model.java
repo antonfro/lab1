@@ -35,6 +35,7 @@ public class Model implements ActionListener {
 
     void addVehicle (Vehicle vehicle, int startX, int startY) {
         vehicles.add(vehicle);
+        vehicle.setPosition(startX,startY);
         notifyCarAdded(vehicle.getRegId(), vehicle.getModelName(),startX, startY);
 
     }
