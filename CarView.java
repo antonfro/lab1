@@ -51,8 +51,9 @@ public class CarView extends JFrame implements modelListener{
 
     @Override
     public void removedCar(Integer regID) {
-        drawPanel.carPositions.remove(regID);
         drawPanel.images.remove(regID);
+        drawPanel.carPositions.remove(regID);
+
         drawPanel.repaint();
     }
 
